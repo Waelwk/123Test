@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { Apprenant } from '../entities/apprenant.model';
+
 import { AuthService } from '../services/auth.service';
 import { EtablissementService } from '../services/etablissement.service';
 
@@ -16,7 +16,10 @@ export class Etablissement {
       public telEtablissement: number,
       public emailEtablissement: string,
       public remarqueEtablissement: string,
-      public imageEtablissement: File,
+      public data: Blob,
+      public file: File,
+      public fileType :string,
+      
     
     ) {
     }
@@ -27,7 +30,7 @@ export class Etablissement {
   styleUrls: ['./etablissement.component.css']
 })
   
-export class EtablissementComponent implements OnInit{
+export class EtablissementComponent {
   public modalRef!: BsModalRef;
   public etablissements!: Etablissement[];
   public etablissement!: Etablissement;
@@ -36,38 +39,54 @@ export class EtablissementComponent implements OnInit{
   private deleteId !: number;
   public message!: string;
   public ajoutForm!: FormGroup; 
+  selectedFile: any;
+    Data!: Blob;
+
   
-fileToUpload: File | null = null;
+  
+
   constructor(private modalService: BsModalService, private httpClient: HttpClient, private fb: FormBuilder,public etabService : EtablissementService,private authService:AuthService,) { }
  
   getEtablissement() {
     this.etabService.getEtablissements().subscribe(response => {
       console.log(response);
+
       this.etablissements = response;
       });
+  }
+  
+
+
+//  onFileChange(event) {
+//     this.etablissement.file = event.target.files[0];
+//   }
+  public onFileChanged(event:any) {
+    
+   this.selectedFile = event.target.files[0];
+
+  
 }
 
- 
-  onSubmit(f:NgForm) {
+  onSubmit (f: NgForm) {
   
     
-  this.etabService.addEtablissement(f.value).subscribe(response => {
+  this.etabService.addEtablissement( this.selectedFile , f.value ).subscribe(response => {
     console.log(response);
     this.ngOnInit();})
  
   this.modalService.hide(); //dismiss the modal
 }
 
-  onSubmits() {
-    this.etabService.addEtablissement(
-      this.etablissement
-    )
-  }
-  
-ngOnInit(): void {
-  this.getEtablissement();
-}
+  // onSubmits() {
+  //   this.etabService.addEtablissement(
+  //     this.etablissement
+  //   )
+  // }
 
+  ngOnInit(): void {
+    this.getEtablissement()
+
+}
 
 
 /************************ pop up****************** */

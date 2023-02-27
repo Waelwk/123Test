@@ -14,10 +14,14 @@ export class EtablissementService {
 
   constructor(private httpClient: HttpClient, private authService : AuthService,private modalService: BsModalService) { }
 
+
+
+  
   getEtablissements() {
     let jwt = this.authService.getToken();
     jwt = "Bearer "+jwt;
-    let httpHeaders = new HttpHeaders({"Authorization":jwt})
+    let httpHeaders = new HttpHeaders({ "Authorization": jwt })
+    
     return this.httpClient.get<Etablissement[]>(this.apiURL+"all",{headers:httpHeaders});}
 
     ajoutEtab(etab: Etablissement) : Observable <Etablissement> {
@@ -47,7 +51,7 @@ export class EtablissementService {
       //   }
 
   
-  addEtablissement (
+  addEtablissement (file :File,
     etab:Etablissement
   ) : Observable <Etablissement> {
     let jwt = this.authService.getToken();
@@ -55,7 +59,7 @@ export class EtablissementService {
     let httpHeaders = new HttpHeaders({ "Authorization": jwt });
     
     const formData = new FormData();
-    formData.append('imageEtablissement', etab.imageEtablissement);
+    formData.append('file',file);
     formData.append('NomEtablissement', etab.nomEtablissement);
     formData.append('AbreviationEtablissement', etab.abreviationEtablissement);
     
