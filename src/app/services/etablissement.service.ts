@@ -61,6 +61,7 @@ export class EtablissementService {
     const formData = new FormData();
     formData.append('file',file);
     formData.append('NomEtablissement', etab.nomEtablissement);
+     formData.append('telEtablissement',etab.telEtablissement);
     formData.append('AbreviationEtablissement', etab.abreviationEtablissement);
     
     formData.append('EmailEtablissement', etab.emailEtablissement);

@@ -41,6 +41,7 @@ export class EtablissementComponent {
   public ajoutForm!: FormGroup; 
   selectedFile: any;
     Data!: Blob;
+    dbimage: any;
 
   
   
@@ -50,8 +51,11 @@ export class EtablissementComponent {
   getEtablissement() {
     this.etabService.getEtablissements().subscribe(response => {
       console.log(response);
-
+     
       this.etablissements = response;
+   
+
+
       });
   }
   

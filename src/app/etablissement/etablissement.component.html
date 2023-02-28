@@ -47,7 +47,7 @@
 							</span>
 						
 						<td>{{etablissement.codeEtablissement}}</td>
-			<td></td>
+	<td><img src="{{'data:'+etablissement.fileType+';base64,' + etablissement.data}}" width="100px" height="100px"  /></td>
 						<td>{{etablissement.fileType}}</td>
 						<td>{{etablissement.abreviationEtablissement}}</td>
 						<td>{{etablissement.telEtablissement}}</td>
@@ -109,7 +109,7 @@
 						</div>
 						<div class="form-group">
 							<label>Telephone</label>
-							<input type="text" name="telEtablissement"  #telEtablissement="ngModel" class="form-control" required ngModel>
+							<input type="tel" name="telEtablissement"  #telEtablissement="ngModel" class="form-control" required ngModel>
 							<span *ngIf="telEtablissement.invalid && telEtablissement.touched" class="error">Vous devez entrer le telephone de l'etablissemant</span>
 						</div>
 						
